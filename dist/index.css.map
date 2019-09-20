@@ -1,0 +1,1 @@
+{"version":3,"file":"index.css","sources":["webpack:///./src/app.less"],"sourcesContent":["div {\n  background: #ff0000;\n  width: 200px;\n  height: 200px;\n}\n"],"mappings":"AAAA;AACA;AACA;AACA;AACA;;","sourceRoot":""}
