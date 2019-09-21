@@ -1,7 +1,72 @@
-div {
-  background: #ff0000;
-  width: 200px;
-  height: 200px;
+.connect-4__board {
+  display: flex;
+  flex-direction: row;
+}
+.connect-4__column {
+  width: 100px;
+  background-color: #3366ff;
+  border-left: 4px solid #5588ff;
+  border-right: 4px solid #5588ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.connect-4__column.can-play:hover {
+  cursor: pointer;
+  background-color: #4499ff;
+  border-left: 4px solid #77aaff;
+  border-right: 4px solid #77aaff;
+}
+.connect-4__cell {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  position: relative;
+  border-radius: 100%;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  background: #1122bb;
+}
+.connect-4__cell .dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 100%;
+  border: 4px solid transparent;
+}
+.connect-4__cell.red .dot {
+  background-color: #ee4444;
+  border-color: #ff6666;
+}
+.connect-4__cell.yellow .dot {
+  background-color: #eeee44;
+  border-color: #ffff66;
+}
+.connect-4__cell.transitioning-in .dot {
+  animation: transition-in linear 150ms;
+}
+@keyframes transition-in {
+  0% {
+    top: -80px;
+  }
+  100% {
+    top: 0;
+  }
+}
+.connect-4__cell.transitioning-through .dot {
+  top: 80px;
+  animation: transition-through linear 300ms;
+}
+@keyframes transition-through {
+  0% {
+    top: -80px;
+  }
+  100% {
+    top: 80px;
+  }
 }
 
 

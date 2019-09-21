@@ -1,5 +1,79 @@
-div {
-  background: #ff0000;
-  width: 200px;
-  height: 200px;
+
+@colWidth: 100px;
+@rowHeight: 90px;
+@colBorder: 4px;
+@cellSize: 80px;
+@dotBorder: 4px;
+
+.connect-4__board {
+  display: flex;
+  flex-direction: row;
+}
+
+.connect-4__column {
+  width: @colWidth;
+  background-color: #3366ff;
+  border-left: @colBorder solid #5588ff;
+  border-right: @colBorder solid #5588ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &.can-play:hover {
+    cursor: pointer;
+    background-color: #4499ff;
+    border-left: @colBorder solid #77aaff;
+    border-right: @colBorder solid #77aaff;
+  }
+}
+
+.connect-4__cell {
+  margin-top: (@rowHeight - @cellSize) / 2;
+  margin-bottom: (@rowHeight - @cellSize) / 2;
+  position: relative;
+  border-radius: 100%;
+  width: @cellSize;
+  height: @cellSize;
+  overflow: hidden;
+  background: #1122bb;
+  .dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @cellSize - @dotBorder * 2;
+    height: @cellSize - @dotBorder * 2;
+    border-radius: 100%;
+    border: @dotBorder solid transparent;
+  }
+  &.red .dot {
+    background-color: #ee4444;
+    border-color: #ff6666;
+  }
+  &.yellow .dot {
+    background-color: #eeee44;
+    border-color: #ffff66;
+  }
+  &.transitioning-in .dot {
+    @keyframes transition-in {
+      0% {
+        top: -@cellSize;
+      }
+      100% {
+        top: 0;
+      }
+    }
+    animation: transition-in linear 150ms;
+  }
+  &.transitioning-through .dot {
+    @keyframes transition-through {
+      0% {
+        top: -@cellSize;
+      }
+      100% {
+        top: @cellSize;
+      }
+    }
+    top: @cellSize;
+    animation: transition-through linear 300ms;
+  }
 }

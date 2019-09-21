@@ -7,7 +7,8 @@
     "build": "webpack",
     "build-dev": "webpack -w --mode development",
     "start": "node ./server/index.js",
-    "start-dev": "forever -w ./server/index.js | pino-pretty"
+    "start-dev": "forever -w ./server/index.js | pino-pretty",
+    "test": "mocha test"
   },
   "author": "Robert Brownstein",
   "license": "ISC",
@@ -16,18 +17,23 @@
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "chai": "^4.2.0",
+    "classnames": "^2.2.6",
     "css-loader": "^3.2.0",
     "eslint": "^6.4.0",
     "forever": "^1.0.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.8.0",
+    "mocha": "^6.2.0",
     "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
     "express": "^4.17.1",
+    "express-session": "^1.16.2",
     "pino": "^5.13.3",
     "pug": "^2.0.4"
   }
