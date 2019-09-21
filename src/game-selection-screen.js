@@ -11,7 +11,7 @@ export default function GameSelectionScreen ({
   return <div className="game-selection__container">
     <h2>Configure Game</h2>
     <div className="game-selection__name">
-      <label htmlFor="game-name">Name: </label>
+      <label htmlFor="game-name">Game Name: </label>
       <input
         id="game-name"
         type="text"

@@ -33353,7 +33353,7 @@ function GameSelectionScreen(_ref) {
     className: "game-selection__name"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "game-name"
-  }, "Name: "), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, "Game Name: "), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     id: "game-name",
     type: "text",
     value: gameName,
