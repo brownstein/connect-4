@@ -36,17 +36,14 @@ export function Connect4Column ({
   const [cellState, setCellState] = useState(cells.map(c => null));
   const [transitionState, setTransitionState] = useState(cells.map(c => null));
   if (cellState !== cells) {
-    console.log("has update");
     for (let ci = 0; ci < cells.length; ci++) {
       if (cells[ci] !== cellState[ci]) {
         const nextCellColor = cells[ci];
-        console.log({ nextCellColor });
         const nextTransitionState = [];
         let ctStart = 0;
         let ctEnd = 300;
         for (let pci = 0; pci < ci; pci++) {
           const tci = pci;
-          console.log({ tci });
           setTimeout(
             () => setTransitionState(s => {
               s[tci] = { through: true, color: nextCellColor };
@@ -105,40 +102,36 @@ export function Connect4Column ({
   </div>
 }
 
-export class Connect4Board extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      cells: initializeBoard(...BOARD_SIZE)
-    };
-    this.state.cells[4][5] = "yellow";
-  }
-  onClickColumn (col) {
-    let cells = this.state.cells;
-    if (!checkValidMove(cells, col)) {
-      return;
-    }
-    cells = cells.map(column => column);
-    const column = cells[col].map(v => v);
-    for (let ci = 0; ci < column.length; ci++) {
-      if ((ci === column.length - 1) || (column[ci + 1])) {
-        column[ci] = "red";
-        cells[col] = column;
-        break;
-      }
-    }
-    this.setState({ cells });
-  }
-  render () {
-    return <div className="connect-4__board">
-      {this.state.cells.map((col, i) =>
+export function Connect4Board ({
+  board,
+  canPlay,
+  onPlay,
+  winner,
+  gameOver,
+  waitingForPlayer
+}) {
+  return <div className="connect-4__container">
+    <div className="connect-4__board">
+      {board.map((col, i) =>
         <Connect4Column
           key={i}
           cells={col}
-          canPlay={checkValidMove(this.state.cells, i)}
-          onClick={() => this.onClickColumn(i)}
+          canPlay={canPlay && checkValidMove(board, i)}
+          onClick={() => onPlay(i)}
         />
       )}
-    </div>;
-  }
+    </div>
+    { waitingForPlayer ?
+      <div className="waiting-for-player"><div>Waiting for other player...</div></div> :
+      null
+    }
+    { gameOver ?
+      <div className="game-over"><h2>Game Over</h2></div> :
+      null
+    }
+    { winner ?
+      <div className="game-over"><h2>{winner} wins!</h2></div> :
+      null
+    }
+  </div>;
 }

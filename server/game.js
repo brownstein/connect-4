@@ -33,7 +33,7 @@ module.exports = app => {
       if (openGamesByName[name]) {
         const game = openGamesByName[name];
         delete openGamesByName[name];
-        game.stated = true;
+        game.started = true;
         res.status(200).send({ game, yourColor: YELLOW });
         return next();
       }
@@ -41,6 +41,7 @@ module.exports = app => {
       const game = {
         id: cuid(),
         name,
+        multiplayer: true,
         started: false,
         over: false,
         winner: null,
