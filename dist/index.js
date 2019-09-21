@@ -29356,8 +29356,6 @@ if (false) {} else {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 var BOARD_SIZE = [7, 6];
 var RED = "red";
 var YELLOW = "yellow";
@@ -29442,20 +29440,41 @@ function checkForWin(columns) {
   return null;
 }
 
-var Connect4Game = function Connect4Game() {
-  _classCallCheck(this, Connect4Game);
+function checkForGameOver(columns) {
+  var foundColors = 0;
+  columns.forEach(function (c) {
+    return foundColors += columns[0] === null ? 1 : 0;
+  });
+  return foundColors === columns.length;
+}
 
-  this.columns = initializeBoard.apply(void 0, BOARD_SIZE);
-  this.currentTurn = RED;
-  this.complete = false;
-};
+function playMove(columns, column, color) {
+  var gameColumn = columns[column];
+
+  for (var ci = 0; ci < gameColumn.length; ci++) {
+    if (ci === gameColumn.length - 1 || gameColumn[ci + 1]) {
+      gameColumn[ci] = color;
+      break;
+    }
+  }
+}
+
+function getOtherColor(color) {
+  return COLORS.find(function (c) {
+    return c !== color;
+  });
+}
 
 module.exports = {
+  BOARD_SIZE: BOARD_SIZE,
   RED: RED,
   YELLOW: YELLOW,
   initializeBoard: initializeBoard,
   checkForWin: checkForWin,
-  checkValidMove: checkValidMove
+  checkForGameOver: checkForGameOver,
+  checkValidMove: checkValidMove,
+  playMove: playMove,
+  getOtherColor: getOtherColor
 };
 
 /***/ }),

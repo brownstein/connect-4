@@ -66,18 +66,34 @@ function checkForWin (columns) {
   return null;
 }
 
-class Connect4Game {
-  constructor () {
-    this.columns = initializeBoard(...BOARD_SIZE);
-    this.currentTurn = RED;
-    this.complete = false;
+function checkForGameOver (columns) {
+  let foundColors = 0;
+  columns.forEach(c => foundColors += columns[0] === null ? 1 : 0);
+  return foundColors === columns.length;
+}
+
+function playMove (columns, column, color) {
+  const gameColumn = columns[column];
+  for (let ci = 0; ci < gameColumn.length; ci++) {
+    if ((ci === gameColumn.length - 1) || gameColumn[ci + 1]) {
+      gameColumn[ci] = color;
+      break;
+    }
   }
 }
 
+function getOtherColor (color) {
+  return COLORS.find(c => c !== color);
+}
+
 module.exports = {
+  BOARD_SIZE,
   RED,
   YELLOW,
   initializeBoard,
   checkForWin,
-  checkValidMove
+  checkForGameOver,
+  checkValidMove,
+  playMove,
+  getOtherColor
 };

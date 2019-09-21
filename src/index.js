@@ -6,6 +6,8 @@ import {
 } from "./connect-4-board";
 import "./app.less";
 
+
+
 function init () {
   const container = document.getElementById("container");
   //<Connect4Column cells={[null, null, null, null, "yellow"]} />
