@@ -19,13 +19,35 @@ module.exports = app => {
   const openGamesByName = {};
   const gamesByID = {};
 
+  // use a standard constructor for games
+  class Game {
+    constructor (props) {
+      this.id = cuid();
+      this.name = null;
+      this.multiplayer = false;
+      this.playerNames = {};
+      this.started = false;
+      this.over = false;
+      this.winner = false;
+      this.turn = RED;
+      this.board = initializeBoard(...BOARD_SIZE);
+      if (props) {
+        Object.assign(this, props);
+      }
+    }
+  }
+
   /**
    * Starts a new game
+   * @param req.body.isMultiplayer - whether the game is multiplayer
+   * @param req.body.name - the session name
+   * @param req.body.playerName - the name of the player
    */
   app.post("/api/games", function (req, res, next) {
     const {
       isMultiplayer,
-      name
+      name,
+      playerName
     } = req.body;
     // multiplayer games
     if (isMultiplayer) {
@@ -34,35 +56,27 @@ module.exports = app => {
         const game = openGamesByName[name];
         delete openGamesByName[name];
         game.started = true;
+        game.playerNames[YELLOW] = playerName;
         res.status(200).send({ game, yourColor: YELLOW });
         return next();
       }
       // start new game
-      const game = {
-        id: cuid(),
-        name,
+      const game = new Game({
         multiplayer: true,
-        started: false,
-        over: false,
-        winner: null,
-        turn: RED,
-        board: initializeBoard(...BOARD_SIZE)
-      };
+        name,
+        playerNames: { [RED]: playerName }
+      });
       openGamesByName[game.name] = game;
       gamesByID[game.id] = game;
       res.status(200).send({ game, yourColor: RED });
       return next();
     }
     // single player games
-    const game = {
-      id: cuid(),
+    const game = new Game({
       name: name || "You vs. Computer",
-      started: true,
-      over: false,
-      winner: null,
-      turn: RED,
-      board: initializeBoard(...BOARD_SIZE)
-    };
+      playerNames: { [RED]: playerName, [YELLOW]: "The Computer" },
+      started: true
+    });
     gamesByID[game.id] = game;
     res.status(200).send({ game, yourColor: RED });
     return next();
@@ -116,6 +130,9 @@ module.exports = app => {
 
     // update winner and over flags
     game.winner = checkForWin(game.board);
+    if (game.winner) {
+      game.winnerName = game.playerNames[game.winner];
+    }
     game.over = !!game.winner || checkForGameOver(game.board);
 
     // update current turn

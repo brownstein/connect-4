@@ -24,13 +24,14 @@ class App extends Component {
     this.startGame = this.startGame.bind(this);
     this.playMove = this.playMove.bind(this);
   }
-  async startGame ({ isMultiplayer, name }) {
+  async startGame ({ isMultiplayer, name, playerName }) {
     this.setState({
       loading: true
     });
     const res = await superagent.post("/api/games").send({
       isMultiplayer,
-      name
+      name,
+      playerName
     });
     const { game, yourColor } = res.body;
     this.setState({
@@ -75,7 +76,8 @@ class App extends Component {
         waitingForPlayer={!game.started}
         onPlay={this.playMove}
         gameOver={game.over && !game.winner}
-        winner={game.winner}
+        winner={game.winnerName}
+        currentPlayerTurn={game.started && game.playerNames[game.turn]}
         />;
     }
     else {

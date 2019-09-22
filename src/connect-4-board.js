@@ -108,9 +108,11 @@ export function Connect4Board ({
   onPlay,
   winner,
   gameOver,
-  waitingForPlayer
+  waitingForPlayer,
+  currentPlayerTurn
 }) {
   return <div className="connect-4__container">
+    <div className="connect-4__player-turn">{ currentPlayerTurn ? `${currentPlayerTurn}'s turn'` : null }</div>
     <div className="connect-4__board">
       {board.map((col, i) =>
         <Connect4Column

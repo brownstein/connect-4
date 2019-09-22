@@ -83,6 +83,9 @@ h1 {
   display: flex;
   flex-direction: row;
 }
+.connect-4__player-turn {
+  text-align: center;
+}
 .connect-4__column {
   width: 100px;
   background-color: #3366ff;

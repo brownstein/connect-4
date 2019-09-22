@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 
+/**
+ * Game selection/configuration screen
+ * @param startGameWithParameters - callback to start the game
+ */
 export default function GameSelectionScreen ({
   startGameWithParameters
 }) {
-  const [isMultiplayer, setIsMultiplayer] = useState(true);
   const [gameName, setGameName] = useState("");
+  const [playerName, setPlayerName] = useState("");
+  const [isMultiplayer, setIsMultiplayer] = useState(true);
+
   function startGame () {
-    startGameWithParameters({ isMultiplayer, name: gameName });
+    startGameWithParameters({ isMultiplayer, name: gameName, playerName });
   }
+
   return <div className="game-selection__container">
     <h2>Configure Game</h2>
     <div className="game-selection__name">
@@ -17,6 +24,15 @@ export default function GameSelectionScreen ({
         type="text"
         value={gameName}
         onChange={e => setGameName(e.target.value)}
+        />
+    </div>
+    <div className="player-selection__name">
+      <label htmlFor="player-name">Player Name: </label>
+      <input
+        id="game-name"
+        type="text"
+        value={playerName}
+        onChange={e => setPlayerName(e.target.value)}
         />
     </div>
     <div className="game-selection__multiplayer">
@@ -29,7 +45,10 @@ export default function GameSelectionScreen ({
       <label htmlFor="game-type">Multiplayer</label>
     </div>
     <div>
-      <button onClick={startGame} disabled={isMultiplayer && !gameName}>Start</button>
+      <button
+        onClick={startGame}
+        disabled={(isMultiplayer && !gameName) || !playerName}
+        >Start</button>
     </div>
   </div>;
 }

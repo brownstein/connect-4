@@ -32977,6 +32977,8 @@ var YELLOW = "yellow";
 var COLORS = [RED, YELLOW];
 /**
  * Creates an empty 2D array array of [sizeX, sizeY]
+ * @param sizeX - number of columns
+ * @param sizeY - number of rows
  */
 
 function initializeBoard(sizeX, sizeY) {
@@ -32994,6 +32996,12 @@ function initializeBoard(sizeX, sizeY) {
 
   return columns;
 }
+/**
+ * Checks to see if a given move is valid
+ * @param columns - game board
+ * @param position - column position of play
+ */
+
 
 function checkValidMove(columns, position) {
   var column = columns[position];
@@ -33008,6 +33016,11 @@ function checkValidMove(columns, position) {
 
   return false;
 }
+/**
+ * Checks for a win
+ * @param columns - game board
+ */
+
 
 function checkForWin(columns) {
   var directions = [[0, 1], [1, 1], [1, 0], [1, -1]];
@@ -33054,6 +33067,11 @@ function checkForWin(columns) {
 
   return null;
 }
+/**
+ * Checks for a game over condition
+ * @param columns - game board
+ */
+
 
 function checkForGameOver(columns) {
   var foundColors = 0;
@@ -33062,6 +33080,13 @@ function checkForGameOver(columns) {
   });
   return foundColors === columns.length;
 }
+/**
+ * Conducts a move
+ * @param columns - game board
+ * @param column - the column to play
+ * @param color - the color to play
+ */
+
 
 function playMove(columns, column, color) {
   var gameColumn = columns[column];
@@ -33073,6 +33098,10 @@ function playMove(columns, column, color) {
     }
   }
 }
+/**
+ * Gets the opposite color
+ */
+
 
 function getOtherColor(color) {
   return COLORS.find(function (c) {
@@ -33286,10 +33315,13 @@ function Connect4Board(_ref3) {
       onPlay = _ref3.onPlay,
       winner = _ref3.winner,
       gameOver = _ref3.gameOver,
-      waitingForPlayer = _ref3.waitingForPlayer;
+      waitingForPlayer = _ref3.waitingForPlayer,
+      currentPlayerTurn = _ref3.currentPlayerTurn;
   return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "connect-4__container"
   }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+    className: "connect-4__player-turn"
+  }, currentPlayerTurn ? "".concat(currentPlayerTurn, "'s turn'") : null), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "connect-4__board"
   }, board.map(function (col, i) {
     return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Connect4Column, {
@@ -33327,23 +33359,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 
+/**
+ * Game selection/configuration screen
+ * @param startGameWithParameters - callback to start the game
+ */
+
 function GameSelectionScreen(_ref) {
   var startGameWithParameters = _ref.startGameWithParameters;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
-      isMultiplayer = _useState2[0],
-      setIsMultiplayer = _useState2[1];
+      gameName = _useState2[0],
+      setGameName = _useState2[1];
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
-      gameName = _useState4[0],
-      setGameName = _useState4[1];
+      playerName = _useState4[0],
+      setPlayerName = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState5, 2),
+      isMultiplayer = _useState6[0],
+      setIsMultiplayer = _useState6[1];
 
   function startGame() {
     startGameWithParameters({
       isMultiplayer: isMultiplayer,
-      name: gameName
+      name: gameName,
+      playerName: playerName
     });
   }
 
@@ -33361,6 +33404,17 @@ function GameSelectionScreen(_ref) {
       return setGameName(e.target.value);
     }
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "player-selection__name"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "player-name"
+  }, "Player Name: "), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    id: "game-name",
+    type: "text",
+    value: playerName,
+    onChange: function onChange(e) {
+      return setPlayerName(e.target.value);
+    }
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "game-selection__multiplayer"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     id: "game-type",
@@ -33373,7 +33427,7 @@ function GameSelectionScreen(_ref) {
     htmlFor: "game-type"
   }, "Multiplayer")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
     onClick: startGame,
-    disabled: isMultiplayer && !gameName
+    disabled: isMultiplayer && !gameName || !playerName
   }, "Start")));
 }
 
@@ -33465,20 +33519,21 @@ function (_Component) {
       var _startGame = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
-        var isMultiplayer, name, res, _res$body, game, yourColor;
+        var isMultiplayer, name, playerName, res, _res$body, game, yourColor;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                isMultiplayer = _ref.isMultiplayer, name = _ref.name;
+                isMultiplayer = _ref.isMultiplayer, name = _ref.name, playerName = _ref.playerName;
                 this.setState({
                   loading: true
                 });
                 _context.next = 4;
                 return superagent__WEBPACK_IMPORTED_MODULE_11___default.a.post("/api/games").send({
                   isMultiplayer: isMultiplayer,
-                  name: name
+                  name: name,
+                  playerName: playerName
                 });
 
               case 4:
@@ -33618,7 +33673,8 @@ function (_Component) {
           waitingForPlayer: !game.started,
           onPlay: this.playMove,
           gameOver: game.over && !game.winner,
-          winner: game.winner
+          winner: game.winnerName,
+          currentPlayerTurn: game.started && game.playerNames[game.turn]
         });
       } else {
         content = react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement(_game_selection_screen__WEBPACK_IMPORTED_MODULE_13__["default"], {
