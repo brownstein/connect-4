@@ -40,6 +40,6 @@ app.get("/", function (req, res) {
 app.use(express.static("dist"));
 
 // listen on a hard-coded port - would normally make this configurable
-app.listen(80, function() {
-  logger.info("connect-4 server listening on port 80");
+app.listen(8080, function() {
+  logger.info("connect-4 server listening on port 8080");
 });
