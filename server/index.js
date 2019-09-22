@@ -23,6 +23,12 @@ app.use(function (req, res, next) {
   next();
 });
 
+// health check
+app.get("/health-check", function (req, res, next) {
+  res.status(200).send({ healthy: "yes" });
+  next();
+});
+
 // set up API routes for game
 setupGameRoutes(app);
 
