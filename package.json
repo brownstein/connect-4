@@ -31,6 +31,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "mocha": "^6.2.0",
     "morgan": "^1.9.1",
+    "pino-pretty": "^3.2.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "superagent": "^5.1.0",
