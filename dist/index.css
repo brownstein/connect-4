@@ -82,6 +82,7 @@ h1 {
 .connect-4__board {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 .connect-4__player-turn {
   text-align: center;

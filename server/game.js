@@ -130,10 +130,12 @@ module.exports = app => {
 
     // update winner and over flags
     game.winner = checkForWin(game.board);
+    game.over = !!game.winner || checkForGameOver(game.board);
+
+    // if we have a winner, provide their name
     if (game.winner) {
       game.winnerName = game.playerNames[game.winner];
     }
-    game.over = !!game.winner || checkForGameOver(game.board);
 
     // update current turn
     game.turn = game.over ? null : getOtherColor(color);
@@ -146,7 +148,12 @@ module.exports = app => {
           const spot = Math.floor(Math.random() * game.board.length);
           if (!game.board[spot][0]) {
             playMove(game.board, spot, YELLOW);
-            game.turn = RED;
+            game.winner = checkForWin(game.board);
+            game.over = !!game.winner || checkForGameOver(game.board);
+            if (game.winner) {
+              game.winnerName = game.playerNames[game.winner];
+            }
+            game.turn = game.over ? null : RED;
             break;
           }
         }

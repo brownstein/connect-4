@@ -6,8 +6,6 @@ import {
   initializeBoard
 } from "../shared-logic/board";
 
-const BOARD_SIZE = [7, 6];
-
 /**
  * Cell class for connect-4.
  */
@@ -112,7 +110,7 @@ export function Connect4Board ({
   currentPlayerTurn
 }) {
   return <div className="connect-4__container">
-    <div className="connect-4__player-turn">{ currentPlayerTurn ? `${currentPlayerTurn}'s turn'` : null }</div>
+    <div className="connect-4__player-turn">{ currentPlayerTurn ? `${currentPlayerTurn}'s turn` : null }</div>
     <div className="connect-4__board">
       {board.map((col, i) =>
         <Connect4Column

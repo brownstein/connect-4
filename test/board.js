@@ -2,6 +2,7 @@
 const { expect } = require("chai");
 const {
   checkForWin,
+  checkForGameOver,
   initializeBoard,
   RED,
   YELLOW
@@ -42,5 +43,31 @@ describe("win condition", function () {
     board[4][5] = RED;
     const win = checkForWin(board);
     expect(win).to.equal(RED);
+  });
+  it("should be a color for another diagonal win", function () {
+    const board = initializeBoard(7, 6);
+    board[1][3] = YELLOW;
+    board[2][2] = YELLOW;
+    board[3][1] = YELLOW;
+    board[4][0] = YELLOW;
+    const win = checkForWin(board);
+    expect(win).to.equal(YELLOW);
+  });
+});
+
+describe("game over condition", function () {
+  it("should be true for a game that is over", function () {
+    const board = initializeBoard(3, 3);
+    board[0][0] = RED;
+    board[1][0] = RED;
+    board[2][0] = RED;
+    board[0][1] = RED;
+    board[1][1] = RED;
+    board[2][1] = RED;
+    board[0][2] = RED;
+    board[1][2] = RED;
+    board[2][2] = RED;
+    const gameOver = checkForGameOver(board);
+    expect(gameOver).to.equal(true);
   });
 });

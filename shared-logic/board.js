@@ -83,7 +83,7 @@ function checkForWin (columns) {
  */
 function checkForGameOver (columns) {
   let foundColors = 0;
-  columns.forEach(c => foundColors += columns[0] === null ? 1 : 0);
+  columns.forEach(c => foundColors += (c[0] !== null) ? 1 : 0);
   return foundColors === columns.length;
 }
 

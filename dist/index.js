@@ -33076,7 +33076,7 @@ function checkForWin(columns) {
 function checkForGameOver(columns) {
   var foundColors = 0;
   columns.forEach(function (c) {
-    return foundColors += columns[0] === null ? 1 : 0;
+    return foundColors += c[0] !== null ? 1 : 0;
   });
   return foundColors === columns.length;
 }
@@ -33164,7 +33164,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var BOARD_SIZE = [7, 6];
 /**
  * Cell class for connect-4.
  */
@@ -33321,7 +33320,7 @@ function Connect4Board(_ref3) {
     className: "connect-4__container"
   }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "connect-4__player-turn"
-  }, currentPlayerTurn ? "".concat(currentPlayerTurn, "'s turn'") : null), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+  }, currentPlayerTurn ? "".concat(currentPlayerTurn, "'s turn") : null), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "connect-4__board"
   }, board.map(function (col, i) {
     return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Connect4Column, {
